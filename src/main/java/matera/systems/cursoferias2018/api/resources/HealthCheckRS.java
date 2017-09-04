@@ -1,4 +1,4 @@
-package matera.systems.cursoferias2018.api;
+package matera.systems.cursoferias2018.api.resources;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
