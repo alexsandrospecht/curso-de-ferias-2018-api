@@ -111,5 +111,5 @@ public class UsuariosResourceIT {
 
         Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());
     }
-    
+
 }
