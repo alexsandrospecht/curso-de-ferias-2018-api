@@ -8,8 +8,6 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.UUID;
-
 public class UsuariosResourceIT {
 
     static final String USUARIOS_URL = "http://localhost:8080/usuarios";
