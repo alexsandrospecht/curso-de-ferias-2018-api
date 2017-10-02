@@ -17,7 +17,7 @@ public class UsuariosResourceIT {
     static final int CREATED_HTTP_STATUS_CODE = 201;
     static final int OK_HTTP_STATUS_CODE = 200;
     static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
-    static final String LOCATION_PATTERN = USUARIOS_URL + "/" + UUID_REGEX;
+    static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
 
     @Test
     public void criarUsuario() {
@@ -51,7 +51,7 @@ public class UsuariosResourceIT {
             RestAssured
                 .given()
                     .header("Accept", "application/json")
-                    .get(USUARIOS_URL + "/usuarios")
+                    .get(USUARIOS_URL)
                 .thenReturn();
 
         UsuarioResponse[] usuarios = response.getBody().as(UsuarioResponse[].class);
@@ -67,7 +67,7 @@ public class UsuariosResourceIT {
             RestAssured
                 .given()
                     .header("Accept", "application/json")
-                    .get(USUARIOS_URL + "/usuarios/idusuario")
+                    .get(USUARIOS_URL + "/idusuario")
                 .thenReturn();
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
