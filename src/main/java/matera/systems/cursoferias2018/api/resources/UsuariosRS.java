@@ -9,18 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/usuarios")
 public class UsuariosRS {
 
-    private final UsuarioService service;
-
     @Autowired
-    public UsuariosRS(UsuarioService service) {
-        this.service = service;
-    }
+    private UsuarioService service;
 
     @PostMapping(
             consumes = { "application/json", "application/xml" }
@@ -50,7 +47,6 @@ public class UsuariosRS {
     }
 
     @GetMapping(
-            consumes = { "application/json", "application/xml" },
             produces = { "application/json", "application/xml" }
     )
     public ResponseEntity<List<UsuarioResponse>> all() {
@@ -60,14 +56,15 @@ public class UsuariosRS {
     }
 
     @GetMapping(
+            value = "{usuarioID}",
             consumes = { "application/json", "application/xml" },
             produces = { "application/json", "application/xml" }
     )
-    public ResponseEntity<UsuarioResponse> findByID(String usuarioID) {
+    public ResponseEntity<UsuarioResponse> findByID(@PathVariable String usuarioID) {
 
-        final UsuarioResponse usuario = service.findUsuarioByID(UUID.fromString(usuarioID));
-        if (usuario != null) {
-            return ResponseEntity.status(200).body(usuario);
+        final Optional<UsuarioResponse> usuario = service.findUsuarioByID(UUID.fromString(usuarioID));
+        if (usuario.isPresent()) {
+            return ResponseEntity.status(200).body(usuario.get());
         } else {
             return ResponseEntity.status(404).build();
         }

@@ -1,13 +1,23 @@
 package matera.systems.cursoferias2018.api.services;
 
+import matera.systems.cursoferias2018.api.domain.entity.UsuarioEntity;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
+import matera.systems.cursoferias2018.api.repository.UsuarioRepository;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+@Service
 public class UsuarioService {
+
+    private UsuarioRepository repository;
 
     /**
      * Criar novo usuário
@@ -16,7 +26,9 @@ public class UsuarioService {
      * @return UUID do usuário criado
      */
     public UUID criar(CriarUsuarioRequest request) {
-        return UUID.randomUUID();
+
+        UsuarioEntity entity = new UsuarioEntity();
+        return repository.criar(entity);
     }
 
     /**
@@ -25,7 +37,7 @@ public class UsuarioService {
      * @param usuarioID UUID do usuário a ser deletado
      */
     public void deletar(UUID usuarioID) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        repository.deletar(usuarioID);
     }
 
     /**
@@ -44,7 +56,8 @@ public class UsuarioService {
      * @return
      */
     public List<UsuarioResponse> getUsuarios() {
-        throw new UnsupportedOperationException("Not implemented yet");
+
+        return repository.listar().parallelStream().map(mapFunction).collect(Collectors.toList());
     }
 
     /**
@@ -53,7 +66,13 @@ public class UsuarioService {
      * @param id
      * @return
      */
-    public UsuarioResponse findUsuarioByID(UUID id) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public Optional<UsuarioResponse> findUsuarioByID(UUID id) {
+        return repository.findByID(id).map(mapFunction);
     }
+
+    private Function<UsuarioEntity, UsuarioResponse> mapFunction = (entity) -> {
+        UsuarioResponse response = new UsuarioResponse();
+
+        return response;
+    };
 }
