@@ -7,6 +7,7 @@ public class CriarUsuarioRequest {
     private String email;
     private String urlPhoto;
     private String perfil;
+    private String senha;
 
     public String getNome() {
         return nome;
@@ -46,5 +47,13 @@ public class CriarUsuarioRequest {
 
     public void setPerfil(String perfil) {
         this.perfil = perfil;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

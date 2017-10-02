@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,25 +31,24 @@ public class UsuariosRS {
                 .build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> delete(String usuarioId) {
+    @DeleteMapping(value = "{usuarioID}")
+    public ResponseEntity<Void> delete(@PathVariable  String usuarioID) {
 
-        service.deletar(UUID.fromString(usuarioId));
+        service.deletar(UUID.fromString(usuarioID));
         return ResponseEntity.status(204).build();
     }
 
     @PutMapping(
+            value = "{usuarioID}",
             consumes = { "application/json", "application/xml" }
     )
-    public ResponseEntity<Void> update(String usuarioID, @RequestBody AtualizarUsuarioRequest request) {
+    public ResponseEntity<Void> update(@PathVariable String usuarioID, @RequestBody AtualizarUsuarioRequest request) {
 
         service.atualizar(UUID.fromString(usuarioID), request);
         return ResponseEntity.status(200).build();
     }
 
-    @GetMapping(
-            produces = { "application/json", "application/xml" }
-    )
+    @GetMapping(produces = { "application/json", "application/xml" })
     public ResponseEntity<List<UsuarioResponse>> all() {
 
         final List<UsuarioResponse> usuarios = service.getUsuarios();
@@ -57,7 +57,6 @@ public class UsuariosRS {
 
     @GetMapping(
             value = "{usuarioID}",
-            consumes = { "application/json", "application/xml" },
             produces = { "application/json", "application/xml" }
     )
     public ResponseEntity<UsuarioResponse> findByID(@PathVariable String usuarioID) {
