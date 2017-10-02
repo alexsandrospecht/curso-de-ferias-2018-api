@@ -27,7 +27,7 @@ public class HealthCheckResourceIT {
     private Header getAuthorizationHeader() {
 
         String clientBasicAuthCredentials =
-                Base64.getEncoder().encodeToString("angular:@ngul@r".getBytes());
+                Base64.getEncoder().encodeToString("angular:alunos".getBytes());
 
         Response response = RestAssured.given().
                 header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
