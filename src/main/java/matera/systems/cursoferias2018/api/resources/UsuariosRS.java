@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -61,9 +62,9 @@ public class UsuariosRS {
     )
     public ResponseEntity<UsuarioResponse> findByID(@PathVariable String usuarioID) {
 
-        final UsuarioResponse usuario = service.findUsuarioByID(UUID.fromString(usuarioID));
-        if (usuario != null) {
-            return ResponseEntity.status(200).body(usuario);
+        final Optional<UsuarioResponse> usuario = service.findUsuarioByID(UUID.fromString(usuarioID));
+        if (usuario.isPresent()) {
+            return ResponseEntity.status(200).body(usuario.get());
         } else {
             return ResponseEntity.status(404).build();
         }
