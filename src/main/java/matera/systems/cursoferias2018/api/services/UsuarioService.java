@@ -75,4 +75,8 @@ public class UsuarioService {
 
         return response;
     };
+
+    public Optional<UsuarioResponse> findUsuarioByLogin(String usuarioLogin) {
+        return repository.findByUsuario(usuarioLogin).map(mapFunction);
+    }
 }
