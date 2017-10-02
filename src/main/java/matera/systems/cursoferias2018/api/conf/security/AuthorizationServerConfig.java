@@ -20,7 +20,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
             .withClient("angular")
-            .secret("@ngul@r")
+            .secret("alunos")
             .scopes("read","write")
             .authorizedGrantTypes("password")
         .and()
