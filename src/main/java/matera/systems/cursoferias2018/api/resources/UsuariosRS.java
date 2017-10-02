@@ -46,7 +46,6 @@ public class UsuariosRS {
     }
 
     @GetMapping(
-            consumes = { "application/json", "application/xml" },
             produces = { "application/json", "application/xml" }
     )
     public ResponseEntity<List<UsuarioResponse>> all() {

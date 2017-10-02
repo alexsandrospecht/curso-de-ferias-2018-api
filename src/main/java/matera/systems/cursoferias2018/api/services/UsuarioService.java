@@ -12,7 +12,6 @@ import java.util.UUID;
 @Service
 public class UsuarioService {
 
-
     /**
      * Criar novo usuário
      *
@@ -49,7 +48,10 @@ public class UsuarioService {
      * @return
      */
     public List<UsuarioResponse> getUsuarios() {
-        List<UsuarioResponse> usuarios = new ArrayList<UsuarioResponse>();
+        List<UsuarioResponse> usuarios = new ArrayList<>();
+        usuarios.add(new UsuarioResponse());
+        usuarios.add(new UsuarioResponse());
+        usuarios.add(new UsuarioResponse());
         return usuarios;
     }
 
@@ -62,4 +64,5 @@ public class UsuarioService {
     public UsuarioResponse findUsuarioByID(UUID id) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
+
 }
