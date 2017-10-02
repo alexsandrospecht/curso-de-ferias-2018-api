@@ -6,6 +6,7 @@ public class CriarUsuarioRequest {
     private String login;
     private String email;
     private String urlPhoto;
+    private String perfil;
 
     public String getNome() {
         return nome;
@@ -39,4 +40,11 @@ public class CriarUsuarioRequest {
         this.urlPhoto = urlPhoto;
     }
 
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
 }
