@@ -3,11 +3,15 @@ package matera.systems.cursoferias2018.api.services;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class UsuarioService {
+
 
     /**
      * Criar novo usuário
@@ -16,6 +20,7 @@ public class UsuarioService {
      * @return UUID do usuário criado
      */
     public UUID criar(CriarUsuarioRequest request) {
+
         return UUID.randomUUID();
     }
 
@@ -44,7 +49,8 @@ public class UsuarioService {
      * @return
      */
     public List<UsuarioResponse> getUsuarios() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        List<UsuarioResponse> usuarios = new ArrayList<UsuarioResponse>();
+        return usuarios;
     }
 
     /**

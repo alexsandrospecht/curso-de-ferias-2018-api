@@ -15,12 +15,8 @@ import java.util.UUID;
 @RequestMapping(path = "/usuarios")
 public class UsuariosRS {
 
-    private final UsuarioService service;
-
     @Autowired
-    public UsuariosRS(UsuarioService service) {
-        this.service = service;
-    }
+    private UsuarioService service;
 
     @PostMapping(
             consumes = { "application/json", "application/xml" }
@@ -60,10 +56,11 @@ public class UsuariosRS {
     }
 
     @GetMapping(
+            value = "{usuarioID}",
             consumes = { "application/json", "application/xml" },
             produces = { "application/json", "application/xml" }
     )
-    public ResponseEntity<UsuarioResponse> findByID(String usuarioID) {
+    public ResponseEntity<UsuarioResponse> findByID(@PathVariable String usuarioID) {
 
         final UsuarioResponse usuario = service.findUsuarioByID(UUID.fromString(usuarioID));
         if (usuario != null) {
