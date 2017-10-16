@@ -1,7 +1,9 @@
 package matera.systems.cursoferias2018.api.resources;
 
+import io.restassured.http.Header;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
+import matera.systems.cursoferias2018.api.domain.request.UsuarioLoginRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -11,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Base64;
 
 public class UsuariosResourceIT {
 
@@ -37,6 +40,7 @@ public class UsuariosResourceIT {
             RestAssured
                 .given()
                     .body(createRequest)
+                    .header(getAuthorizationHeader())
                     .header(CONTENT_TYPE_HEADER, "application/json")
                 .when()
                     .post(USUARIOS_URL)
@@ -54,6 +58,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .header(getAuthorizationHeader())
                     .header("Accept", "application/json")
                     .get(USUARIOS_URL)
                 .thenReturn();
@@ -70,6 +75,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .header(getAuthorizationHeader())
                     .header("Accept", "application/json")
                     .get(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_2.toString())
                 .thenReturn();
@@ -88,6 +94,7 @@ public class UsuariosResourceIT {
         Response response =
                 RestAssured
                     .given()
+                        .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .body(atualizarUsuarioRequest)
@@ -103,11 +110,32 @@ public class UsuariosResourceIT {
         Response response =
                 RestAssured
                     .given()
+                        .header(getAuthorizationHeader())
+                        .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .delete(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
                     .thenReturn();
 
         Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());
+    }
+
+    private Header getAuthorizationHeader() {
+
+        String clientBasicAuthCredentials =
+                Base64.getEncoder().encodeToString("angular:alunos".getBytes());
+
+        Response response = RestAssured.given().
+                header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
+                .queryParam("username", "admin")
+                .queryParam("password", "admin")
+                .queryParam("grant_type", "password")
+                .when()
+                .post("http://localhost:8080/oauth/token")
+                .then().extract().response();
+
+        String token = response.getBody().jsonPath().getString("access_token");
+
+        return new Header("Authorization", "bearer " + token);
     }
 
 }

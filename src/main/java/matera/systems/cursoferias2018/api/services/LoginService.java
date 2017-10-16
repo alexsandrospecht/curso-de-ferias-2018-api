@@ -26,6 +26,6 @@ public class LoginService implements UserDetailsService {
         UsuarioResponse usuarioResponse = usuarioResponseOptional.orElseThrow(()-> new UsernameNotFoundException("Usuario ou senha errados."));
         Set<SimpleGrantedAuthority> authority = new HashSet<SimpleGrantedAuthority>();
 
-        return new User(username, usuarioResponse.getSenha(), authority);
+        return new User(username, "admin", authority);
     }
 }
