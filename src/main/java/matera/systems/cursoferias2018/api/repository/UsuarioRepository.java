@@ -18,4 +18,5 @@ public interface UsuarioRepository {
 
     void atualizar(UsuarioEntity update);
 
+    Optional<UsuarioEntity> findByUsuario(String usuarioLogin);
 }

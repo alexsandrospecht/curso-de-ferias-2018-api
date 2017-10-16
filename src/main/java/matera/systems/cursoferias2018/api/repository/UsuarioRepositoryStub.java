@@ -63,4 +63,9 @@ public class UsuarioRepositoryStub implements UsuarioRepository {
         data.put(update.getUuid(), update);
     }
 
+    @Override
+    public Optional<UsuarioEntity> findByUsuario(String usuarioLogin) {
+        return Optional.ofNullable(data.getOrDefault(usuarioLogin, null));
+    }
+
 }
