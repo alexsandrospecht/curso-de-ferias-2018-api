@@ -5,8 +5,12 @@ import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public class UsuariosResourceIT {
 
@@ -56,7 +60,7 @@ public class UsuariosResourceIT {
 
         UsuarioResponse[] usuarios = response.getBody().as(UsuarioResponse[].class);
 
-        Assert.assertEquals(3,usuarios.length);
+        Assert.assertThat(Arrays.asList(usuarios), Matchers.not(Matchers.empty()));
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
@@ -67,15 +71,11 @@ public class UsuariosResourceIT {
             RestAssured
                 .given()
                     .header("Accept", "application/json")
-                    .get(USUARIOS_URL + "/idusuario")
+                    .get(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_2.toString())
                 .thenReturn();
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
-        Assert.assertEquals("Paulo Almeida", usuario.getNome());
-        Assert.assertEquals("rochapaulo", usuario.getLogin());
-        Assert.assertEquals("paulo.almeida@matera.com", usuario.getEmail());
-        Assert.assertEquals("ADMINISTRADOR", usuario.getPerfil());
-        Assert.assertEquals("https://s.gravatar.com/avatar/27b57f4f9580f95c4cbe78bb6d3ec893?s=80", usuario.getUrlPhoto());
+        Assert.assertNotNull(usuario);
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
@@ -91,7 +91,7 @@ public class UsuariosResourceIT {
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .body(atualizarUsuarioRequest)
-                        .put(USUARIOS_URL + "/369d8a35-e1df-4afc-9e0e-146b44f27d6d")
+                        .put(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_3.toString())
                     .thenReturn();
 
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
@@ -104,7 +104,7 @@ public class UsuariosResourceIT {
                 RestAssured
                     .given()
                         .header("Accept", "application/json")
-                        .delete(USUARIOS_URL + "/369d8a35-e1df-4afc-9e0e-146b44f27d6d")
+                        .delete(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
                     .thenReturn();
 
         Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());

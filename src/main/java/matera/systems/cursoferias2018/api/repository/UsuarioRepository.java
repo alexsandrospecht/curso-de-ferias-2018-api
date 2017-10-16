@@ -16,4 +16,6 @@ public interface UsuarioRepository {
 
     Optional<UsuarioEntity> findByID(UUID uuid);
 
+    void atualizar(UsuarioEntity update);
+
 }
