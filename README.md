@@ -13,7 +13,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 * Java 8
 * Maven
 * SpringBoot starter-web
-* SpringBoot security
+* SpringBoot security e oauth2
 * SpringData JPA
 * H2 Database
 * JUnit 4
