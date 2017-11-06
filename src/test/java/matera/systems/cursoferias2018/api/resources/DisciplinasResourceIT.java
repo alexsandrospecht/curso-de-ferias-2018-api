@@ -60,7 +60,7 @@ public class DisciplinasResourceIT {
     }
 
     @Test
-    public void deleteDisciplina() {
+    public void removeDisciplina() {
 
         Response response =
                 RestAssured

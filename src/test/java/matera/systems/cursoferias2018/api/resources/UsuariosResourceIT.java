@@ -111,7 +111,6 @@ public class UsuariosResourceIT {
                 RestAssured
                     .given()
                         .header(getAuthorizationHeader())
-                        .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .delete(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
                     .thenReturn();
