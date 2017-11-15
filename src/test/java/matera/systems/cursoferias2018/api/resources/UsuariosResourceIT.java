@@ -1,6 +1,7 @@
 package matera.systems.cursoferias2018.api.resources;
 
 import io.restassured.http.Header;
+import matera.systems.cursoferias2018.api.Application;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.UsuarioLoginRequest;
@@ -11,13 +12,23 @@ import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Base64;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
+@Import(Application.class)
+@ActiveProfiles(profiles = "stub")
 public class UsuariosResourceIT {
 
-    static final String USUARIOS_URL = "http://localhost:8080/usuarios";
+    static final String USUARIOS_URL = "/usuarios";
     static final String CONTENT_TYPE_HEADER = "Content-Type";
     static final String LOCATION_HEADER = "location";
     static final int NO_CONTENT_HTTP_STATUS_CODE = 204;
@@ -25,6 +36,9 @@ public class UsuariosResourceIT {
     static final int OK_HTTP_STATUS_CODE = 200;
     static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
     static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
+
+    @LocalServerPort
+    private int portNumber;
 
     @Test
     public void criarUsuario() {
@@ -39,6 +53,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .port(portNumber)
                     .body(createRequest)
                     .header(getAuthorizationHeader())
                     .header(CONTENT_TYPE_HEADER, "application/json")
@@ -58,6 +73,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .port(portNumber)
                     .header(getAuthorizationHeader())
                     .header("Accept", "application/json")
                     .get(USUARIOS_URL)
@@ -75,6 +91,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .port(portNumber)
                     .header(getAuthorizationHeader())
                     .header("Accept", "application/json")
                     .get(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_2.toString())
@@ -94,6 +111,7 @@ public class UsuariosResourceIT {
         Response response =
                 RestAssured
                     .given()
+                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
@@ -110,6 +128,7 @@ public class UsuariosResourceIT {
         Response response =
                 RestAssured
                     .given()
+                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .delete(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
@@ -123,13 +142,14 @@ public class UsuariosResourceIT {
         String clientBasicAuthCredentials =
                 Base64.getEncoder().encodeToString("angular:alunos".getBytes());
 
-        Response response = RestAssured.given().
-                header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
-                .queryParam("username", "admin")
-                .queryParam("password", "admin")
-                .queryParam("grant_type", "password")
+        Response response = RestAssured.given()
+                    .port(portNumber)
+                    .header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
+                    .queryParam("username", "admin")
+                    .queryParam("password", "admin")
+                    .queryParam("grant_type", "password")
                 .when()
-                .post("http://localhost:8080/oauth/token")
+                    .post("/oauth/token")
                 .then().extract().response();
 
         String token = response.getBody().jsonPath().getString("access_token");
