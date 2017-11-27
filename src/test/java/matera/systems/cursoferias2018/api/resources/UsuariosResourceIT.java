@@ -76,6 +76,7 @@ public class UsuariosResourceIT {
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
         Assert.assertNotNull(usuario);
+        Assert.assertTrue(UsuarioRepositoryStub.USUARIO_2.equals(usuario.getUuid()));
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
