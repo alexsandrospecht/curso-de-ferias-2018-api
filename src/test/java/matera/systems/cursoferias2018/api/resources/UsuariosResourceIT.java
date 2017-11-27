@@ -73,6 +73,7 @@ public class UsuariosResourceIT {
                 .thenReturn();
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
+        Assert.assertEquals(UUID.fromString("bc51c8bb-bad3-47e4-af0c-7f467148f23d"), usuario.getUuid());
         Assert.assertEquals("Paulo Almeida", usuario.getNome());
         Assert.assertEquals("rochapaulo", usuario.getLogin());
         Assert.assertEquals("paulo.almeida@matera.com", usuario.getEmail());
