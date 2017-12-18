@@ -11,6 +11,14 @@ public class UsuarioResponse {
     private String perfil;
     private String urlPhoto;
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -51,11 +59,4 @@ public class UsuarioResponse {
         this.urlPhoto = urlPhoto;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
 }
