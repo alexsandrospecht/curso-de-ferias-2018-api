@@ -120,6 +120,7 @@ public class UsuarioService {
 
     private Function<UsuarioEntity, UsuarioResponse> toResponse = (entity) -> {
         UsuarioResponse response = new UsuarioResponse();
+        response.setUuid(entity.getUuid());
         response.setNome(entity.getNome());
         response.setLogin(entity.getLogin());
         response.setEmail(entity.getEmail());

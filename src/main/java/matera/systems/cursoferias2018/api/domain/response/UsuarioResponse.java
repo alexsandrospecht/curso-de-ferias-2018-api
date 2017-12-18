@@ -1,12 +1,23 @@
 package matera.systems.cursoferias2018.api.domain.response;
 
+import java.util.UUID;
+
 public class UsuarioResponse {
 
+    private UUID uuid;
     private String nome;
     private String login;
     private String email;
     private String perfil;
     private String urlPhoto;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public String getNome() {
         return nome;
