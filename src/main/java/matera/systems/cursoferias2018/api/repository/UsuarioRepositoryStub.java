@@ -20,18 +20,36 @@ public class UsuarioRepositoryStub implements UsuarioRepository {
         {
             UsuarioEntity entity = new UsuarioEntity();
             entity.setUuid(USUARIO_1);
+            entity.setEmail("usuario_1@domain.com");
+            entity.setLogin("usuario_1");
+            entity.setNome("Usuario Um");
+            entity.setPerfil("USUARIO");
+            entity.setSenha("senha");
+            entity.setUrlPhoto("http://bucket/usuario/1/perfil.png");
             data.put(USUARIO_1, entity);
         }
 
         {
             UsuarioEntity entity = new UsuarioEntity();
             entity.setUuid(USUARIO_2);
+            entity.setEmail("usuario_2@domain.com");
+            entity.setLogin("usuario_2");
+            entity.setNome("Usuario Dois");
+            entity.setPerfil("ADMINISTRADOR");
+            entity.setSenha("senha");
+            entity.setUrlPhoto("http://bucket/usuario/2/perfil.png");
             data.put(USUARIO_2, entity);
         }
 
         {
             UsuarioEntity entity = new UsuarioEntity();
             entity.setUuid(USUARIO_3);
+            entity.setEmail("usuario_3@domain.com");
+            entity.setLogin("usuario_3");
+            entity.setNome("Usuario Tres");
+            entity.setPerfil("USUARIO");
+            entity.setSenha("senha");
+            entity.setUrlPhoto("http://bucket/usuario/3/perfil.png");
             data.put(USUARIO_3, entity);
         }
     }
