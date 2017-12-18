@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 public class UsuariosResourceIT {
 
@@ -75,7 +76,13 @@ public class UsuariosResourceIT {
                 .thenReturn();
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
-        Assert.assertNotNull(usuario);
+        Assert.assertEquals(UUID.fromString("bc51c8bb-bad3-47e4-af0c-7f467148f23d"), usuario.getUuid());
+        Assert.assertEquals("Usuario Dois", usuario.getNome());
+        Assert.assertEquals("usuario_2", usuario.getLogin());
+        Assert.assertEquals("usuario_2@domain.com", usuario.getEmail());
+        Assert.assertEquals("ADMINISTRADOR", usuario.getPerfil());
+        Assert.assertEquals("http://bucket/usuario/2/perfil.png", usuario.getUrlPhoto());
+
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
