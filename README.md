@@ -87,6 +87,80 @@ https://frozen-savannah-80661.herokuapp.com/
 ### SpringBoot Starter
 https://start.spring.io/
 
-### Testes Unitários
+### Testes Unitários/Integração
+Classes de testes unitários devem ser sufixadas como: Test (ex: HelloTest), para testes de integração
+o sufixo deve ser IT (ex: HelloIT).
+
+São executados durante o build (mvn clean install) via surefire e failsafe plugins.
+* surefire: http://maven.apache.org/surefire/maven-surefire-plugin/
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.20.1</version>
+    <configuration>
+        <parallel>methods</parallel>
+        <threadCount>10</threadCount>
+    </configuration>
+</plugin>
+```
+
+* failsafe: http://maven.apache.org/surefire/maven-failsafe-plugin/
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <version>2.20.1</version>
+    <configuration>
+        <additionalClasspathElements>
+            <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+        </additionalClasspathElements>
+        <includes>
+            <include>**/*IT.java</include>
+        </includes>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+O bootstrapping da aplicação é feito via spring-boot plugin (mvn spring-boot:run -Drun.profiles=stub)
+```xml
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <profiles>
+            <profile>stub</profile>
+        </profiles>
+    </configuration>
+    <executions>
+        <execution>
+            <id>pre-integration-test</id>
+            <goals>
+                <goal>start</goal>
+            </goals>
+            <configuration>
+                <skip>${it.skip}</skip>
+            </configuration>
+        </execution>
+        <execution>
+            <id>post-integration-test</id>
+            <goals>
+                <goal>stop</goal>
+            </goals>
+            <configuration>
+                <skip>${it.skip}</skip>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 ### Docker
 ### Heroku
