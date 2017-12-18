@@ -3,7 +3,6 @@ package matera.systems.cursoferias2018.api.resources;
 import io.restassured.http.Header;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
-import matera.systems.cursoferias2018.api.domain.request.UsuarioLoginRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -17,14 +16,14 @@ import java.util.Base64;
 
 public class UsuariosResourceIT {
 
-    static final String USUARIOS_URL = "http://localhost:8080/usuarios";
-    static final String CONTENT_TYPE_HEADER = "Content-Type";
-    static final String LOCATION_HEADER = "location";
-    static final int NO_CONTENT_HTTP_STATUS_CODE = 204;
-    static final int CREATED_HTTP_STATUS_CODE = 201;
-    static final int OK_HTTP_STATUS_CODE = 200;
-    static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
-    static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
+    private static final String USUARIOS_URL = "http://localhost:8080/usuarios";
+    private static final String CONTENT_TYPE_HEADER = "Content-Type";
+    private static final String LOCATION_HEADER = "location";
+    private static final int NO_CONTENT_HTTP_STATUS_CODE = 204;
+    private static final int CREATED_HTTP_STATUS_CODE = 201;
+    private static final int OK_HTTP_STATUS_CODE = 200;
+    private static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
+    private static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
 
     @Test
     public void criarUsuario() {
@@ -81,8 +80,15 @@ public class UsuariosResourceIT {
                 .thenReturn();
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
-        Assert.assertNotNull(usuario);
+
+        Assert.assertEquals(UsuarioRepositoryStub.USUARIO_2, usuario.getUuid());
+        Assert.assertEquals("Usuario Dois", usuario.getNome());
+        Assert.assertEquals("usuario_2", usuario.getLogin());
+        Assert.assertEquals("usuario_2@domain.com", usuario.getEmail());
+        Assert.assertEquals("ADMINISTRADOR", usuario.getPerfil());
+        Assert.assertEquals("http://bucket/usuario/2/perfil.png", usuario.getUrlPhoto());
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
+
     }
 
     @Test
