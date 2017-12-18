@@ -40,12 +40,44 @@ https://frozen-savannah-80661.herokuapp.com/
   
   Ofereça diversos formatos dos recursos para diferentes necessidades.
   
-  **5. Comunique sem estado**
+  **5. Comunique sem estado (stateless)**
   
   Em outras palavras, um servidor não deveria guardar o estado da comunicação de qualquer um dos clientes que se comunique com ele além de uma única requisição. A razão mais óbvia para isso é escalabilidade - o número de clientes que podem interagir com o servidor seria consideravelmente impactado se fosse preciso manter o estado do cliente.
       
 
-### Protocolo HTTP
+### Protocolo HTTP 
+
+Hypertext Transfer Protocol, é um protocolo de comunicação utilizado para sistemas de informação de hipermídia, distribuídos
+e colaborativos. É a base para a comunicação de dados da World Wide Web.
+
+#### Mensagem HTTP
+
+O protocolo faz a comunicação entre cliente e servidor por meio de mensagens. O cliente envia uma mensagem de requisição
+de um recurso e o servidor envia uma mensagem de resposta ao cliente.
+
+A mensagem é composta por Cabeçalho (header) e Corpo (body).
+* **Header:** é utilizado para transmitir informações adicionais entre o cliente e o servidor. É especificado 
+imediatamente após a linha inicial da transação (método), tanto para a requisição do client quanto para a resposta do
+servidor, seguido de dois-pontos ( : ) e um valor.
+    * ***general-header:*** Informações adicionais da mensagem transmitida.
+    * ***request-header:*** Configurações da request e tipos desejados como resposta.
+    * ***response-header:*** Transmitir informações adicionais da resposta.
+    
+* **Body:** Em uma mensagem de resposta, o corpo é o recurso requisitado pelo cliente, ou ainda uma mensagem de erro. Já em uma requisição
+o corpo, pode conter dados que serão enviados pelo usuário ao servidor.
+Quando uma mensagem HTTP tiver um corpo, poderão ser inclusos headers que descrevam suas características, como por exemplo
+*Content-Type* que informa o tipo MIME dos dados no corpo, *Content-Length* que informa a quantidade de bytes que o body tem.
+
+| Header             | Description            |
+| ------------------ | :--------------------- |
+| Accept             | Fala para o servidor que tipo de dado é esperado como resposta [ex: Accept: application/json ]. |
+| Content-Type       | Indica o tipo de dado do recurso contido no body [ex: Content-Type: text/plain]. |
+| Cache-Control      | Controle de cache [ex: Cache-Control: no-cache ]. 
+| Authorization      | Authorization: \<type\> : \<credentials\> [ex: Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l], é utilizada para autenticar o usuário no servidor. |
+| WWW-Authenticate   | WWW-Authenticate: <type> realm=<realm>, [ex: WWW-Authenticate: Basic realm="Access to the staging site", charset="UTF-8], é um header de resposta, devolvido pelo servidor quando autenticação é necessária, normalmente devolvido junto do status 401 (unauthorized). |
+| Accept-Charset     | Request-header, fala para o servidor qual o charset ele espera como resposta. |
+| Location           | Em caso de resposta 3xx (redirect) indica para onde ir [ex: Location: /index.html], no caso de retorno 201 (created) este header indica onde o recurso foi criado.
+
 #### Verbos [POST, GET, PUT, PATCH, DELETE]
 
 | Verbo         | CRUD                  | Coleção '/usuarios' | Item Específico '/usuarios/{id}'
@@ -56,7 +88,6 @@ https://frozen-savannah-80661.herokuapp.com/
 | PATCH         | Atualizar/Modificar   | 405 (Method not allowed) a não ser que seja possível atualizar toda a coleção | 200 (ok) ou 204 (No content) em caso de sucesso, 404 caso a entidade a ser atualizada nao exista (ID invalido)
 | DELETE        | Deletar               | 405 (Method not allowed) a não ser que seja possível deletar toda a coleção   | 200 (ok) em caso de sucesso, 404 caso a entidade a ser atualizada nao exista (ID invalido)
 
-#### Headers
 
 #### Códigos de Retorno
 ##### 1xx Informativo
@@ -93,7 +124,7 @@ o sufixo deve ser IT (ex: HelloIT).
 
 São executados durante o build (mvn clean install) via surefire e failsafe plugins.
 * surefire: http://maven.apache.org/surefire/maven-surefire-plugin/
-```
+```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-surefire-plugin</artifactId>
@@ -163,4 +194,5 @@ O bootstrapping da aplicação é feito via spring-boot plugin (mvn spring-boot:
 </plugin>
 ```
 ### Docker
+
 ### Heroku
