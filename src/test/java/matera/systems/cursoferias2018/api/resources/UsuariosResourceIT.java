@@ -1,7 +1,6 @@
 package matera.systems.cursoferias2018.api.resources;
 
 import io.restassured.http.Header;
-import matera.systems.cursoferias2018.api.Application;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
@@ -11,20 +10,10 @@ import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Base64;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@RunWith(SpringRunner.class)
-@Import(Application.class)
-@ActiveProfiles(profiles = "stub")
 public class UsuariosResourceIT {
 
     private static final String USUARIOS_URL = "http://localhost:8080/usuarios";
@@ -36,8 +25,7 @@ public class UsuariosResourceIT {
     private static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
     private static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
 
-    @LocalServerPort
-    private int portNumber;
+    private int portNumber = 8080;
 
     @Test
     public void criarUsuario() {
