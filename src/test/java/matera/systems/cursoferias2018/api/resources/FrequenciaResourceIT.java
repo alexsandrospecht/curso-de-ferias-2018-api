@@ -51,6 +51,7 @@ public class FrequenciaResourceIT {
         Assert.assertEquals(CREATED_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
+    @Test
     public void removePresenca() {
 
         Response response =
