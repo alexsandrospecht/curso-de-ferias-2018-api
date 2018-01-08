@@ -28,8 +28,6 @@ public class FrequenciaResourceIT {
 
     static final String FREQUENCIA_URL = "/frequencia";
     static final String CONTENT_TYPE_HEADER = "Content-Type";
-    static final String LOCATION_HEADER = "location";
-    static final int CREATED_HTTP_STATUS_CODE = 201;
     static final int NO_CONTENT_HTTP_STATUS_CODE = 204;
 
     private int portNumber = 8080;
@@ -44,11 +42,11 @@ public class FrequenciaResourceIT {
                         .header(getAuthorizationHeader())
                         .header(CONTENT_TYPE_HEADER, "application/json")
                     .when()
-                        .post(FREQUENCIA_URL + "/" + DisciplinasRepositoryStub.DISCIPLINA_1.toString()
+                        .put(FREQUENCIA_URL + "/" + DisciplinasRepositoryStub.DISCIPLINA_1.toString()
                                 + "/"  +  UsuarioRepositoryStub.USUARIO_1.toString())
                     .thenReturn();
 
-        Assert.assertEquals(CREATED_HTTP_STATUS_CODE, response.getStatusCode());
+        Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
     @Test
