@@ -43,7 +43,10 @@ public class LojaDeCarros {
 	
 	@GetMapping(
 		path = "/lojacarros/carros", 
-		produces = { "application/json" }
+		produces = { 
+				"application/json",
+				"application/xml"
+				}
 	)
 	public ResponseEntity<Collection<Carro>> listaCarros(
 			@RequestParam(required = false) String cor, 
