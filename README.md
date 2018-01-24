@@ -1,5 +1,4 @@
 # Curso de Férias de Desenvolvimento API Rest
-------------
 
 ### Inicialização do Projeto
 ```bash
