@@ -1,7 +1,5 @@
 # Curso de Férias de Desenvolvimento API Rest
 ------------
-https://frozen-savannah-80661.herokuapp.com/
-
 
 ### Inicialização do Projeto
 ```bash
@@ -193,6 +191,6 @@ O bootstrapping da aplicação é feito via spring-boot plugin (mvn spring-boot:
     </executions>
 </plugin>
 ```
-### Docker
-
 ### Heroku
+
+https://frozen-savannah-80661.herokuapp.com/
