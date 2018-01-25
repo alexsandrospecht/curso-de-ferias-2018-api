@@ -18,16 +18,21 @@ import static java.util.Objects.nonNull;
 @RequestMapping(path = "/usuarios")
 public class UsuarioResource {
 
-    private static final String USER_PATH = "http://localhost:8080/usuarios/";
+    private static final String USER_PATH = "/usuarios/";
 
     @Autowired
     private UsuarioService usuarioService;
 
     @PostMapping(consumes = { "application/json"}, produces = { "application/json"})
     public ResponseEntity<?> create(@RequestBody CriarUsuarioRequest request) {
-        final UUID criar = usuarioService.create(request);
+        UUID id = null;
+        try {
+            id = usuarioService.create(request);
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        return ResponseEntity.created(URI.create(USER_PATH + criar.toString())).build();
+        return ResponseEntity.created(URI.create(USER_PATH + id.toString())).build();
     }
 
     @GetMapping(produces = { "application/json" })

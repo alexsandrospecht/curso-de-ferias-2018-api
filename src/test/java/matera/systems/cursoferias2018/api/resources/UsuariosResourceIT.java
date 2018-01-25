@@ -19,7 +19,7 @@ public class UsuariosResourceIT {
     static final int CREATED_HTTP_STATUS_CODE = 201;
     static final int OK_HTTP_STATUS_CODE = 200;
     static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
-    static final String LOCATION_PATTERN = USUARIOS_URL + "/" + UUID_REGEX;
+    static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
 
     @Test
     public void criarUsuario() {

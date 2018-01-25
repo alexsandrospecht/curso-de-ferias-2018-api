@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class UsuarioService {
 
@@ -27,8 +29,10 @@ public class UsuarioService {
         return usuarioRepository.list().stream().map(u -> new UsuarioResponse(u)).collect(Collectors.toList());
     }
 
-    public UUID create(CriarUsuarioRequest request) {
-        final UUID id = UUID.randomUUID();
+    public UUID create(CriarUsuarioRequest request) throws IllegalAccessException {
+        if (isNull(request)) {
+            throw new IllegalAccessException();
+        }
 
         final UsuarioEntity entity = new UsuarioEntity();
         entity.setEmail(request.getEmail());
@@ -36,7 +40,6 @@ public class UsuarioService {
         entity.setNome(request.getNome());
         entity.setPerfil(request.getPerfil());
         entity.setUrlPhoto(request.getUrlPhoto());
-        entity.setUuid(id);
 
         return usuarioRepository.create(entity);
     }

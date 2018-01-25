@@ -1,12 +1,10 @@
 package matera.systems.cursoferias2018.api.domain.entity;
 
-import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
-
 import java.util.UUID;
 
 public class UsuarioEntity {
 
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
 
     private String nome;
 

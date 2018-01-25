@@ -1,12 +1,13 @@
 package matera.systems.cursoferias2018.api.repository;
 
 import matera.systems.cursoferias2018.api.domain.entity.UsuarioEntity;
-import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
-import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Repository
 @Profile("stub")
@@ -55,24 +56,19 @@ public class UsuarioRepositoryStub implements UsuarioRepository {
 
     @Override
     public UUID create(UsuarioEntity usuario) {
-        db.put(usuario.getUuid(), usuario);
         return usuario.getUuid();
     }
 
     @Override
     public boolean delete(UUID id) {
         if (db.containsKey(id)) {
-            db.remove(id);
             return true;
         }
         return false;
     }
 
     @Override
-    public void update(String id, UsuarioEntity entity) {
-        final UUID uuid = UUID.fromString(id);
-        db.put(uuid, entity);
-    }
+    public void update(String id, UsuarioEntity entity) { }
 
     @Override
     public Collection<UsuarioEntity> list() {
