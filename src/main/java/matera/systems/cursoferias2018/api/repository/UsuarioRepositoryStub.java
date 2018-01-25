@@ -69,12 +69,8 @@ public class UsuarioRepositoryStub implements UsuarioRepository {
     }
 
     @Override
-    public void update(String id, AtualizarUsuarioRequest request) {
+    public void update(String id, UsuarioEntity entity) {
         final UUID uuid = UUID.fromString(id);
-
-        final UsuarioEntity entity = db.get(uuid);
-        entity.setNome(request.getNome());
-
         db.put(uuid, entity);
     }
 
@@ -84,13 +80,8 @@ public class UsuarioRepositoryStub implements UsuarioRepository {
     }
 
     @Override
-    public UsuarioResponse getUsuarioByID(String id) {
-        final UsuarioEntity user = db.get(UUID.fromString(id));
-
-        if (Objects.nonNull(user)) {
-            return new UsuarioResponse(user);
-        }
-        return null;
+    public UsuarioEntity getUsuarioByID(UUID id) {
+        return db.get(id);
     }
 
 }

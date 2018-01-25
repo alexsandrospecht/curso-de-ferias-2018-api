@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -46,10 +47,18 @@ public class UsuarioService {
     }
 
     public void update(String id, AtualizarUsuarioRequest request) {
-        usuarioRepository.update(id, request);
+        UsuarioEntity user = usuarioRepository.getUsuarioByID(UUID.fromString(id));
+
+        user.setNome(request.getNome());
+        usuarioRepository.update(id, user);
     }
 
     public UsuarioResponse getUsuarioByID(String id) {
-        return usuarioRepository.getUsuarioByID(id);
+        final UsuarioEntity user = usuarioRepository.getUsuarioByID(UUID.fromString(id));
+
+        if (Objects.nonNull(user)) {
+            return new UsuarioResponse(user);
+        }
+        return null;
     }
 }
