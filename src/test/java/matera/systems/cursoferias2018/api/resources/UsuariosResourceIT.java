@@ -1,14 +1,14 @@
 package matera.systems.cursoferias2018.api.resources;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
+import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.UUID;
 
 public class UsuariosResourceIT {
 
@@ -23,7 +23,6 @@ public class UsuariosResourceIT {
 
     @Test
     public void criarUsuario() {
-
         CriarUsuarioRequest createRequest = new CriarUsuarioRequest();
         createRequest.setNome("John Doe");
         createRequest.setLogin("john.doe");
@@ -47,44 +46,41 @@ public class UsuariosResourceIT {
     }
 
     @Test
-    public void buscaTodoUsuarios() {
-
+    public void buscaTodosUsuarios() {
         Response response =
             RestAssured
                 .given()
                     .header("Accept", "application/json")
-                    .get(USUARIOS_URL + "/usuarios")
+                    .get(USUARIOS_URL)
                 .thenReturn();
 
         UsuarioResponse[] usuarios = response.getBody().as(UsuarioResponse[].class);
 
-        Assert.assertEquals(3,usuarios.length);
+        Assert.assertThat(usuarios.length, Matchers.greaterThan(0));
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
     @Test
     public void buscarUsuarioPorId() {
-
         Response response =
             RestAssured
                 .given()
                     .header("Accept", "application/json")
-                    .get(USUARIOS_URL + "/usuarios/idusuario")
+                    .get(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
                 .thenReturn();
 
         UsuarioResponse usuario = response.getBody().as(UsuarioResponse.class);
-        Assert.assertEquals(UUID.fromString("bc51c8bb-bad3-47e4-af0c-7f467148f23d"), usuario.getUuid());
-        Assert.assertEquals("Paulo Almeida", usuario.getNome());
-        Assert.assertEquals("rochapaulo", usuario.getLogin());
-        Assert.assertEquals("paulo.almeida@matera.com", usuario.getEmail());
-        Assert.assertEquals("ADMINISTRADOR", usuario.getPerfil());
-        Assert.assertEquals("https://s.gravatar.com/avatar/27b57f4f9580f95c4cbe78bb6d3ec893?s=80", usuario.getUrlPhoto());
+        Assert.assertEquals(UsuarioRepositoryStub.USUARIO_1, usuario.getUuid());
+        Assert.assertEquals("Usuario Um", usuario.getNome());
+        Assert.assertEquals("usuario_1", usuario.getLogin());
+        Assert.assertEquals("usuario_1@domain.com", usuario.getEmail());
+        Assert.assertEquals("USUARIO", usuario.getPerfil());
+        Assert.assertEquals("http://bucket/usuario/1/perfil.png", usuario.getUrlPhoto());
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
     }
 
     @Test
     public void atualizaUsuario() {
-
         AtualizarUsuarioRequest atualizarUsuarioRequest = new AtualizarUsuarioRequest();
         atualizarUsuarioRequest.setNome("Nome Atualizado");
 
@@ -94,7 +90,7 @@ public class UsuariosResourceIT {
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .body(atualizarUsuarioRequest)
-                        .put(USUARIOS_URL + "/369d8a35-e1df-4afc-9e0e-146b44f27d6d")
+                        .put(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_2.toString())
                     .thenReturn();
 
         Assert.assertEquals(OK_HTTP_STATUS_CODE, response.getStatusCode());
@@ -102,12 +98,11 @@ public class UsuariosResourceIT {
 
     @Test
     public void deleteUsuario() {
-
         Response response =
                 RestAssured
                     .given()
                         .header("Accept", "application/json")
-                        .delete(USUARIOS_URL + "/369d8a35-e1df-4afc-9e0e-146b44f27d6d")
+                        .delete(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_3.toString())
                     .thenReturn();
 
         Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());
