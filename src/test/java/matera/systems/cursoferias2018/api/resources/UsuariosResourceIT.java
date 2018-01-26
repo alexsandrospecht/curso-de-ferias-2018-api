@@ -1,5 +1,6 @@
 package matera.systems.cursoferias2018.api.resources;
 
+import io.restassured.http.Header;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
@@ -11,18 +12,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.UUID;
+import java.util.Base64;
 
 public class UsuariosResourceIT {
 
-    static final String USUARIOS_URL = "http://localhost:8080/usuarios";
-    static final String CONTENT_TYPE_HEADER = "Content-Type";
-    static final String LOCATION_HEADER = "location";
-    static final int NO_CONTENT_HTTP_STATUS_CODE = 204;
-    static final int CREATED_HTTP_STATUS_CODE = 201;
-    static final int OK_HTTP_STATUS_CODE = 200;
-    static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
-    static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
+    private static final String USUARIOS_URL = "http://localhost:8080/usuarios";
+    private static final String CONTENT_TYPE_HEADER = "Content-Type";
+    private static final String LOCATION_HEADER = "location";
+    private static final int NO_CONTENT_HTTP_STATUS_CODE = 204;
+    private static final int CREATED_HTTP_STATUS_CODE = 201;
+    private static final int OK_HTTP_STATUS_CODE = 200;
+    private static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
+    private static final String LOCATION_PATTERN = "/usuarios/" + UUID_REGEX;
 
     @Test
     public void criarUsuario() {
@@ -38,6 +39,7 @@ public class UsuariosResourceIT {
             RestAssured
                 .given()
                     .body(createRequest)
+                    .header(getAuthorizationHeader())
                     .header(CONTENT_TYPE_HEADER, "application/json")
                 .when()
                     .post(USUARIOS_URL)
@@ -55,6 +57,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .header(getAuthorizationHeader())
                     .header("Accept", "application/json")
                     .get(USUARIOS_URL)
                 .thenReturn();
@@ -71,6 +74,7 @@ public class UsuariosResourceIT {
         Response response =
             RestAssured
                 .given()
+                    .header(getAuthorizationHeader())
                     .header("Accept", "application/json")
                     .get(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_2.toString())
                 .thenReturn();
@@ -96,6 +100,7 @@ public class UsuariosResourceIT {
         Response response =
                 RestAssured
                     .given()
+                        .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .body(atualizarUsuarioRequest)
@@ -111,11 +116,31 @@ public class UsuariosResourceIT {
         Response response =
                 RestAssured
                     .given()
+                        .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .delete(USUARIOS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
                     .thenReturn();
 
         Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());
+    }
+
+    private Header getAuthorizationHeader() {
+
+        String clientBasicAuthCredentials =
+                Base64.getEncoder().encodeToString("angular:alunos".getBytes());
+
+        Response response = RestAssured.given().
+                header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
+                .queryParam("username", "admin")
+                .queryParam("password", "admin")
+                .queryParam("grant_type", "password")
+                .when()
+                .post("http://localhost:8080/oauth/token")
+                .then().extract().response();
+
+        String token = response.getBody().jsonPath().getString("access_token");
+
+        return new Header("Authorization", "bearer " + token);
     }
 
 }
