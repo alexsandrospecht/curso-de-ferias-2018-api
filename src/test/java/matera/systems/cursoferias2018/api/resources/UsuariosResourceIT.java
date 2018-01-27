@@ -1,11 +1,11 @@
 package matera.systems.cursoferias2018.api.resources;
 
+import io.restassured.RestAssured;
 import io.restassured.http.Header;
+import io.restassured.response.Response;
 import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -27,7 +27,6 @@ public class UsuariosResourceIT {
 
     @Test
     public void criarUsuario() {
-
         CriarUsuarioRequest createRequest = new CriarUsuarioRequest();
         createRequest.setNome("John Doe");
         createRequest.setLogin("john.doe");
@@ -53,7 +52,6 @@ public class UsuariosResourceIT {
 
     @Test
     public void buscaTodoUsuarios() {
-
         Response response =
             RestAssured
                 .given()
@@ -70,7 +68,6 @@ public class UsuariosResourceIT {
 
     @Test
     public void buscarUsuarioPorId() {
-
         Response response =
             RestAssured
                 .given()
@@ -93,7 +90,6 @@ public class UsuariosResourceIT {
 
     @Test
     public void atualizaUsuario() {
-
         AtualizarUsuarioRequest atualizarUsuarioRequest = new AtualizarUsuarioRequest();
         atualizarUsuarioRequest.setNome("Nome Atualizado");
 
@@ -112,7 +108,6 @@ public class UsuariosResourceIT {
 
     @Test
     public void deleteUsuario() {
-
         Response response =
                 RestAssured
                     .given()
@@ -125,14 +120,13 @@ public class UsuariosResourceIT {
     }
 
     private Header getAuthorizationHeader() {
-
         String clientBasicAuthCredentials =
                 Base64.getEncoder().encodeToString("angular:alunos".getBytes());
 
         Response response = RestAssured.given().
                 header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
-                .queryParam("username", "admin")
-                .queryParam("password", "admin")
+                .queryParam("username", "user")
+                .queryParam("password", "pass")
                 .queryParam("grant_type", "password")
                 .when()
                 .post("http://localhost:8080/oauth/token")

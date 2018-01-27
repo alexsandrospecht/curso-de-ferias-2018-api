@@ -19,25 +19,22 @@ public class SecurityConfigIT {
     private static final int BAD_REQUEST_HTTP_STATUS_CODE = 400;
     private static final String USUARIOS_URL = "http://localhost:8080/usuarios";
 
-
     @Test
     public void efetuaLoginCredenciaisInvalidas() {
-
-        UsuarioLoginRequest usuarioLoginRequest= new UsuarioLoginRequest();
-        usuarioLoginRequest.setNome("john.doe");
+        UsuarioLoginRequest usuarioLoginRequest = new UsuarioLoginRequest();
+        usuarioLoginRequest.setNome("user");
         usuarioLoginRequest.setSenha("unknown");
 
         Response response = doLogin(usuarioLoginRequest);
 
-        String errorDescription = response.getBody().jsonPath().getString("error_description");
+        String errorDescription = response.getBody().jsonPath().getString("error");
 
         Assert.assertEquals(BAD_REQUEST_HTTP_STATUS_CODE, response.getStatusCode());
-        Assert.assertEquals(errorDescription, "Bad credentials");
+        Assert.assertEquals("invalid_grant", errorDescription);
     }
 
     @Test
     public void acessaServicoAutenticacao() {
-
         Response response =
                 RestAssured
                         .given()
@@ -51,10 +48,9 @@ public class SecurityConfigIT {
 
     @Test
     public void autenticaComSucesso() {
-
-        UsuarioLoginRequest usuarioLoginRequest= new UsuarioLoginRequest();
-        usuarioLoginRequest.setNome("admin");
-        usuarioLoginRequest.setSenha("admin");
+        UsuarioLoginRequest usuarioLoginRequest = new UsuarioLoginRequest();
+        usuarioLoginRequest.setNome("user");
+        usuarioLoginRequest.setSenha("pass");
 
         Response response = doLogin(usuarioLoginRequest);
 
@@ -65,7 +61,6 @@ public class SecurityConfigIT {
     }
 
     private Response doLogin(UsuarioLoginRequest usuarioLoginRequest) {
-
         String clientBasicAuthCredentials =
                 Base64.getEncoder().encodeToString("angular:alunos".getBytes());
 
