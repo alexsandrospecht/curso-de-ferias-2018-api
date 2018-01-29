@@ -28,15 +28,12 @@ public class DisciplinasResourceIT {
     static final String UUID_REGEX = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
     static final String LOCATION_PATTERN = "/disciplinas/" + UUID_REGEX;
 
-    private int portNumber = 8080;
-
     @Test
     public void buscarDisciplinaPorId() {
 
         Response response =
                 RestAssured
                     .given()
-                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                     .get(DISCIPLINAS_URL + "/" + DisciplinasRepositoryStub.DISCIPLINA_2.toString())
@@ -56,7 +53,6 @@ public class DisciplinasResourceIT {
         Response response =
                 RestAssured
                     .given()
-                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
@@ -73,7 +69,6 @@ public class DisciplinasResourceIT {
         Response response =
                 RestAssured
                     .given()
-                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
@@ -89,7 +84,6 @@ public class DisciplinasResourceIT {
         Response response =
                 RestAssured
                     .given()
-                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                     .get(DISCIPLINAS_URL + "/" + DisciplinasRepositoryStub.DISCIPLINA_2.toString() + "/" + ALUNOS)
@@ -107,7 +101,6 @@ public class DisciplinasResourceIT {
         Response response =
                 RestAssured
                     .given()
-                        .port(portNumber)
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                     .get(DISCIPLINAS_URL)
@@ -132,7 +125,6 @@ public class DisciplinasResourceIT {
         Response response =
                 RestAssured
                     .given()
-                        .port(portNumber)
                         .body(createRequest)
                         .header(getAuthorizationHeader())
                         .header(CONTENT_TYPE_HEADER, "application/json")
@@ -152,10 +144,9 @@ public class DisciplinasResourceIT {
                 Base64.getEncoder().encodeToString("angular:alunos".getBytes());
 
         Response response = RestAssured.given()
-                .port(portNumber)
                 .header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
-                    .queryParam("username", "admin")
-                    .queryParam("password", "admin")
+                    .queryParam("username", "usuario")
+                    .queryParam("password", "password")
                     .queryParam("grant_type", "password")
                 .when()
                 .post("/oauth/token")
