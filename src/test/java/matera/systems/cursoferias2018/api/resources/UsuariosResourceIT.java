@@ -131,8 +131,8 @@ public class UsuariosResourceIT {
 
         Response response = RestAssured.given().
                 header(new Header("Authorization", "Basic " + clientBasicAuthCredentials))
-                .queryParam("username", "admin")
-                .queryParam("password", "admin")
+                .queryParam("username", "usuario")
+                .queryParam("password", "password")
                 .queryParam("grant_type", "password")
                 .when()
                 .post("http://localhost:8080/oauth/token")
