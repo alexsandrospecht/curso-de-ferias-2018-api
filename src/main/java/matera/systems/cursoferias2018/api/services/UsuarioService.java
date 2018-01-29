@@ -118,7 +118,7 @@ public class UsuarioService {
     }
 
 
-    private Function<UsuarioEntity, UsuarioResponse> toResponse = (entity) -> {
+    public Function<UsuarioEntity, UsuarioResponse> toResponse = (entity) -> {
         UsuarioResponse response = new UsuarioResponse();
         response.setUuid(entity.getUuid());
         response.setNome(entity.getNome());

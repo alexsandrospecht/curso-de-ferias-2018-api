@@ -3,8 +3,11 @@ package matera.systems.cursoferias2018.api.resources;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
+import matera.systems.cursoferias2018.api.domain.request.AtualizarDisciplinaRequest;
+import matera.systems.cursoferias2018.api.domain.request.CriaDisciplinaRequest;
+import matera.systems.cursoferias2018.api.domain.response.DisciplinaResponse;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
-import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
+import matera.systems.cursoferias2018.api.repository.DisciplinasRepositoryStub;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -44,7 +47,7 @@ public class DisciplinasResourceIT {
     public void atualizaDisciplina() {
 
         AtualizarDisciplinaRequest atualizarUsuarioRequest = new AtualizarDisciplinaRequest();
-        atualizarUsuarioRequest.descricao("Descricao");
+        atualizarUsuarioRequest.setDescricao("Descricao");
 
         Response response =
                 RestAssured
@@ -68,7 +71,7 @@ public class DisciplinasResourceIT {
                         .header(getAuthorizationHeader())
                         .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
-                    .delete(DISCIPLINAS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
+                    .delete(DISCIPLINAS_URL + "/" + DisciplinasRepositoryStub.DISCIPLINA_1.toString())
                         .thenReturn();
 
         Assert.assertEquals(NO_CONTENT_HTTP_STATUS_CODE, response.getStatusCode());
@@ -112,11 +115,11 @@ public class DisciplinasResourceIT {
     public void criarDisciplina() {
 
         CriaDisciplinaRequest createRequest = new CriaDisciplinaRequest();
-        createRequest.descricao("Back-end Java");
-        createRequest.dataInicio("29/01/2018");
-        createRequest.dataTermino("29/01/2018");
-        createRequest.segmento("Backend");
-        createRequest.urlLogo("http://pictures.pic/course1");
+        createRequest.setDescricao("Back-end Java");
+        createRequest.setDataInicio("29/01/2018");
+        createRequest.setDataTermino("29/01/2018");
+        createRequest.setSegmento("Backend");
+        createRequest.setUrlLogo("http://pictures.pic/course1");
 
         Response response =
                 RestAssured
