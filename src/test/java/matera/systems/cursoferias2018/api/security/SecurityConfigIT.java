@@ -55,8 +55,8 @@ public class SecurityConfigIT {
     public void autenticaComSucesso() {
 
         UsuarioLoginRequest usuarioLoginRequest= new UsuarioLoginRequest();
-        usuarioLoginRequest.setNome("admin");
-        usuarioLoginRequest.setSenha("admin");
+        usuarioLoginRequest.setNome("usuario");
+        usuarioLoginRequest.setSenha("password");
 
         Response response = doLogin(usuarioLoginRequest);
 
