@@ -1,20 +1,25 @@
 package matera.systems.cursoferias2018.api.resources;
 
-import matera.systems.cursoferias2018.api.domain.request.AtualizarDisciplinaRequest;
-import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
-import matera.systems.cursoferias2018.api.domain.request.CriarDisciplinaRequest;
-import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
-import matera.systems.cursoferias2018.api.domain.response.DisciplinaResponse;
-import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
-import matera.systems.cursoferias2018.api.services.DisciplinaService;
-import matera.systems.cursoferias2018.api.services.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import matera.systems.cursoferias2018.api.domain.request.AtualizarDisciplinaRequest;
+import matera.systems.cursoferias2018.api.domain.request.CriarDisciplinaRequest;
+import matera.systems.cursoferias2018.api.domain.response.DisciplinaResponse;
+import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
+import matera.systems.cursoferias2018.api.services.DisciplinaService;
 
 @RestController
 @RequestMapping(path = "/disciplinas")
