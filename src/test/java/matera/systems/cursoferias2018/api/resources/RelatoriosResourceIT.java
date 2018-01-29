@@ -8,5 +8,5 @@ public class RelatoriosResourceIT {
     public void test() {
 
     }
-    
+
 }
