@@ -66,7 +66,6 @@ public class DisciplinasResourceIT {
                 RestAssured
                     .given()
                         .header(getAuthorizationHeader())
-                        .header(getAuthorizationHeader())
                         .header("Accept", "application/json")
                     .delete(DISCIPLINAS_URL + "/" + UsuarioRepositoryStub.USUARIO_1.toString())
                         .thenReturn();
