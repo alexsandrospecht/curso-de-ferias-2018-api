@@ -125,6 +125,7 @@ public class DisciplinaService {
         DisciplinaResponse response = new DisciplinaResponse();
         response.setId(entity.getId());
         response.setDescricao(entity.getDescricao());
+        response.setSegmento(entity.getSegmento());
         response.setUsuarios(entity.getUsuarios());
         response.setDataInicio(entity.getDataInicio());
         response.setDataTermino(entity.getDataTermino());
