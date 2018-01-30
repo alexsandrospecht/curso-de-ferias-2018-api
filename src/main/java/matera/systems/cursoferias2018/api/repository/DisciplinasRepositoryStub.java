@@ -26,18 +26,33 @@ public class DisciplinasRepositoryStub implements DisciplinaRepository {
         {
             DisciplinaEntity entity = new DisciplinaEntity();
             entity.setId(DISCIPLINA_1);
+            entity.setDataInicio("22/01/2018");
+            entity.setDataTermino("03/02/2018");
+            entity.setDescricao("Java REST");
+            entity.setSegmento("Backend");
+
             data.put(DISCIPLINA_1, entity);
         }
 
         {
             DisciplinaEntity entity = new DisciplinaEntity();
             entity.setId(DISCIPLINA_2);
+            entity.setDataInicio("22/01/2018");
+            entity.setDataTermino("03/02/2018");
+            entity.setDescricao("Angular");
+            entity.setSegmento("Front-end");
+ 
             data.put(DISCIPLINA_2, entity);
         }
 
         {
             DisciplinaEntity entity = new DisciplinaEntity();
             entity.setId(DISCIPLINA_3);
+            entity.setDataInicio("22/01/2018");
+            entity.setDataTermino("03/02/2018");
+            entity.setDescricao("Ionic");
+            entity.setSegmento("Mobile");
+            
             data.put(DISCIPLINA_3, entity);
         }
     }
