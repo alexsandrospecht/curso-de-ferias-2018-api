@@ -1,13 +1,10 @@
 package matera.systems.cursoferias2018.api.resources;
 
 import matera.systems.cursoferias2018.api.domain.request.AtualizarDisciplinaRequest;
-import matera.systems.cursoferias2018.api.domain.request.AtualizarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.request.CriarDisciplinaRequest;
-import matera.systems.cursoferias2018.api.domain.request.CriarUsuarioRequest;
 import matera.systems.cursoferias2018.api.domain.response.DisciplinaResponse;
 import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
 import matera.systems.cursoferias2018.api.services.DisciplinaService;
-import matera.systems.cursoferias2018.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -3,25 +3,11 @@ package matera.systems.cursoferias2018.api.resources;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
-import matera.systems.cursoferias2018.api.Application;
-import matera.systems.cursoferias2018.api.domain.request.AtualizarDisciplinaRequest;
-import matera.systems.cursoferias2018.api.domain.request.CriarDisciplinaRequest;
-import matera.systems.cursoferias2018.api.domain.response.DisciplinaResponse;
-import matera.systems.cursoferias2018.api.domain.response.UsuarioResponse;
-import matera.systems.cursoferias2018.api.repository.DisciplinaRepository;
 import matera.systems.cursoferias2018.api.repository.DisciplinasRepositoryStub;
 import matera.systems.cursoferias2018.api.repository.UsuarioRepositoryStub;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
 import java.util.Base64;
 
 public class FrequenciaResourceIT {
@@ -34,7 +20,6 @@ public class FrequenciaResourceIT {
 
     @Test
     public void adicionaPresenca() {
-
         Response response =
                 RestAssured
                     .given()
@@ -51,7 +36,6 @@ public class FrequenciaResourceIT {
 
     @Test
     public void removePresenca() {
-
         Response response =
                 RestAssured
                     .given()
